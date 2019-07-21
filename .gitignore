@@ -6,3 +6,4 @@ input/synimg/synimg/readme.txt
 .vscode/settings.json
 core
 input/synimg/synimg/styles.txt
+src/__pycache__/data.cpython-37.pyc
