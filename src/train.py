@@ -1,4 +1,5 @@
 from data import read_data_from_file, read_labels, write_output, get_labels
+from features import extract_features, convert_nearest_std_colors
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
@@ -21,14 +22,13 @@ def fit_predict(model, X, y, X_cv):
 
 
 def cal_score(y_preds, y):
-    print("y_preds", y_preds)
-    print("y", y)
+    # print("y_preds", y_preds)
+    # print("y", y)
     l = sum([1 if y_preds[idx] == y[idx] else 0 for idx in range(len(y_preds))])
     return l / len(y_preds) * 1.0
 
 
-def extract_features(images):
-    return [image.flatten() for image in images]
+
 
 
 def cross_validate(model, X_train, y_train):
@@ -51,12 +51,16 @@ def cross_validate(model, X_train, y_train):
 
 if __name__ == '__main__':
     # Read input
-    train_data, train_images =  read_data_from_file('synimg/train/data.csv', max_per_class=1000)
-    test_data, test_images = read_data_from_file('synimg/test/data_nostyle.csv', nrows=100)
-    label_encoder, train_data = get_labels(train_data, print_classes=True) # one-hot encode, returns in column 'style_id'
+    MAX_PER_CLASS = 200
+    train_data, train_images =  read_data_from_file('synimg/train/data.csv', max_per_class=MAX_PER_CLASS)
+    test_data, test_images = read_data_from_file('synimg/test/data_nostyle.csv', nrows=10)
+    label_encoder, train_data = get_labels(train_data, print_classes=False) # one-hot encode, returns in column 'style_id'
 
     # Preprocessing features
-    X_train, X_test = extract_features(train_images), extract_features(test_images)
+    X_train, X_test = extract_features(train_images, cachefile="train_{}".format(MAX_PER_CLASS)),\
+        extract_features(test_images, cachefile="test_{}".format(MAX_PER_CLASS))
+    print("X_train", X_train[0].shape, X_train[0])
+
     y_train = list(train_data['style_id'])
 
     # Train model

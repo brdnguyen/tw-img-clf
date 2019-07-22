@@ -8,7 +8,7 @@ import collections
 # Some constant
 WIDTH = 64
 HEIGHT = 32
-ROOT_PATH = '../input/synimg/'
+ROOT_PATH = 'input/synimg/' # relative to project folder
 
 
 def read_data_from_file(filename, nrows=None, max_per_class=None):
@@ -22,11 +22,18 @@ def read_data_from_file(filename, nrows=None, max_per_class=None):
         data = data.groupby('style_name').head(max_per_class).reset_index()
     # print("Shape and review after getting max per group:\n", data.shape, "\n", data.head(20))
 
+    # Read images
+    all_images = read_images(data, max_per_class) # includes caching
+
+    return data, all_images
+
+
+def read_images(data, max_per_class):
     all_images = []
     for idx, row in data.iterrows():
         img = io.imread(ROOT_PATH + row['filepath'])
         all_images.append(img)
-    return data, all_images
+    return all_images
 
 
 def read_labels():
