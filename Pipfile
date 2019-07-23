@@ -15,6 +15,9 @@ scikit-learn = "*"
 matplotlib = "*"
 jupyterlab = "*"
 scikit-image = "*"
+nose = "*"
+flake8 = "*"
+
 
 [requires]
 python_version = "3.7"

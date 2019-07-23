@@ -1,38 +1,39 @@
-# Setup local dev environment
-## Setup Kaggle Kernel Docker
+# Preprequisite
+* Python 3.7
+* Data in `input` folder as-is as in Kaggle kernel
+
+
+# Getting started
+1. Install `pipenv` for environment managemment if you haven't got one:
+
 ```
-docker-machine create -d virtualbox --virtualbox-disk-size "50000" --virtualbox-cpu-count "4" --virtualbox-memory "8092" docker2
-
-docker-machine start docker2
-
-eval $(docker-machine env docker2)
+pip install pipenv
+```
+2. Install dependency
+```
+pipenv install
 ```
 
-## Setup aliases to run
-
-To run python and jupyter notebook in the docker container
-
-Save these aliases in .bash_profile
+# Run tests
 ```
-kpython()
-{
-    docker run -v $PWD:/tmp/working -w=/tmp/working --rm -it kaggle/python python "$@"
-}
-
-ikpython()
-{
-    docker run -v $PWD:/tmp/working -w=/tmp/working --rm -it kaggle/python ipython
-}
-
-
-kjupyter() {
-    docker run -v $PWD:/tmp/working -w=/tmp/working -p 8888:8888 --rm -it kaggle/python bash -c "pip install jupyter_contrib_nbextensions; pip install jupyter_nbextensions_configurator; jupyter contrib nbextension install --user; jupyter notebook --notebook-dir=/tmp/working --ip='*' --port=8888 --no-browser --allow-root"
-}
+pipenv test
 ```
-then `source ~/.bash_profile`
 
-then in command line: `kjupyter`
+# Run full model and
+```
+pipenv run python src/run_all.py
+```
 
-then access Notebook in `http://localhost:8888`
+# Notebook
+Access notebooks in /
 
-Reference: https://medium.com/@zhang_yang/setup-docker-for-kaggle-b34d04705756
+## Note: Setup local dev environment using Kaggle's Docker
+### Setup Kaggle Kernel Docker
+
+To lazily get a docker with all the environment setup that is similar to the one found in Kaggle Kernel, try
+```
+docker pull kaggle/python
+```
+
+
+Follow the full instructions here http://blog.kaggle.com/2016/02/05/how-to-get-started-with-data-science-in-containers/
