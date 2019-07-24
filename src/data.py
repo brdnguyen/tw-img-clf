@@ -21,7 +21,7 @@ def read_data_from_file(filename, nrows=None, max_per_class=None):
     if max_per_class:
         data = data.groupby('style_name').head(max_per_class).reset_index()
     # print("Shape and review after getting max per group:\n", data.shape, "\n", data.head(20))
-
+    # data = data.sample(frac=1.0) 
     # Read images
     all_images = read_images(data, max_per_class) # includes caching
 
@@ -36,21 +36,14 @@ def read_images(data, max_per_class):
     return all_images
 
 
-def read_labels():
-    label_data = pd.read_csv(ROOT_PATH + 'synimg/styles.txt', names=['style'])
-    label_to_labelId, labelId_to_label = {}, {}
-    for idx, style in enumerate(label_data['style']):
-        label_to_labelId[style] = idx
-        labelId_to_label[idx] = style
-    return label_data, label_to_labelId, labelId_to_label
-
-
 def write_output(test_data, label_encoder):
     test_data['style_name'] = labelId_to_label(test_data['label_id'], label_encoder)
     # Doing some validation
     from collections import Counter
-    print(Counter(test_data['style_name']))
+    counter = Counter(test_data['style_name'])
+    print(counter)
     test_data[['id', 'style_name']].to_csv('../submit.csv', index=False)
+    return test_data, counter
 
 
 def get_labels(train_data, print_classes=False):

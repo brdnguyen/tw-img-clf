@@ -1,22 +1,31 @@
 import scipy.spatial as sp
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 import os
+
 main_colors = [
     (0,0,0), (255,255,255), (255,0,0), (0,255,0),
     (0,0,255), (255,255,0), (0,255,255), (255,0,255)
 ]
 
 
+def rescale(features):
+    scaler = MinMaxScaler(feature_range=(0, 1))
+    rescaled_features = scaler.fit_transform(features)
+    return rescaled_features
+
+
 def extract_features(images, cachefile=None):
     print("Extract features starting...")
-    if cachefile: filename = 'cache/' + cachefile
-    if cachefile and os.path.exists(filename + ".npz"):
-        features = np.load(filename + ".npz")['arr_0']
+    if cachefile and os.path.exists(cachefile + ".npz"):
+        features = np.load(cachefile + ".npz")['arr_0']
+        print('loaded from cache')
         return features
+    print("process from scratch")
     features = [image_histogram(image) for image in images]
     if cachefile:
-        np.savez(filename, features)
+        np.savez(cachefile, features)
     return features
 
 

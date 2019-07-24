@@ -6,6 +6,7 @@ from model import model_selection
 from features import extract_features
 MAX_PER_CLASS = 5
 
+#TODO: better to have separate tests for each class (data, features, model)
 # @unittest.skip("Class disabled")
 class TestData(unittest.TestCase):
     @classmethod
