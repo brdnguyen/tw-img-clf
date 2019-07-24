@@ -16,7 +16,7 @@ pipenv install
 
 # Run tests
 ```
-pipenv test
+pipenv run nosetests
 ```
 
 # Run full model and
@@ -25,7 +25,7 @@ pipenv run python src/run_all.py
 ```
 
 # Notebook
-Access notebooks in /
+Access notebooks in /notebook
 
 ## Note: Setup local dev environment using Kaggle's Docker
 ### Setup Kaggle Kernel Docker

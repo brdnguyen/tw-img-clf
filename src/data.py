@@ -21,7 +21,6 @@ def read_data_from_file(filename, nrows=None, max_per_class=None):
     if max_per_class:
         data = data.groupby('style_name').head(max_per_class).reset_index()
     # print("Shape and review after getting max per group:\n", data.shape, "\n", data.head(20))
-    # data = data.sample(frac=1.0) 
     # Read images
     all_images = read_images(data, max_per_class) # includes caching
 

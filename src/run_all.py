@@ -19,7 +19,8 @@ if __name__ == '__main__':
     label_encoder, train_data = get_labels(train_data, print_classes=False) # one-hot encode, returns in column 'style_id'
 
     if RUN_CNN:
-        run_CNN_model(train_images, train_data, test_images) # skip over feature processing
+        test_data = run_CNN_model(train_data, train_images, test_data, test_images) # skip over feature processing
+        write_output(test_data, label_encoder)
         exit(0)
     # Preprocess features
     X_train, X_test = extract_features(train_images, cachefile="cache/train_{}".format(MAX_PER_CLASS)),\
