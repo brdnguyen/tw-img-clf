@@ -1,6 +1,7 @@
 # Preprequisite
 * Python 3.7
-* Data in `input` folder as-is as in Kaggle kernel
+* pipenv 
+* Data in `input` folder
 
 
 # Getting started
