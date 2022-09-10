@@ -30,7 +30,7 @@ Access notebooks in /notebook
 
 ## Note: Setup local dev environment using Docker
 
-To lazily get a docker with all the environment setup that is similar to the one found in Kaggle Kernel, try
+To lazily get a docker with all the environment setup, try
 ```
 docker pull kaggle/python
 ```
